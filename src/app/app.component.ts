@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { SpfapiService } from './spfapi.service';
+import { MeanResponseModel } from './mean-response-model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'spf-website';
+  title = 'Serverless Performance Framework';
+  spfGoAWSMean : MeanResponseModel;
+
+  constructor(private spfapiservice: SpfapiService) { 
+    this.showGoMeanAWS()
+  }
+
+  showGoMeanAWS() {
+    this.title = "Loading..."
+    this.spfapiservice.getMeanGoLangAWS()
+      .subscribe((data: MeanResponseModel) => this.spfGoAWSMean = { ...data });
+    this.title = "...Loaded"
+  }
 }

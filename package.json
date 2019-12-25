@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy-dev": "aws s3 sync dist/spf-website s3://dev.static.serverlessperformance.net --delete",
+    "deploy-prod": "aws s3 sync s3://dev.static.serverlessperformance.net s3://static.serverlessperformance.net --delete"
   },
   "private": true,
   "dependencies": {

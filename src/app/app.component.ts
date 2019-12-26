@@ -9,14 +9,23 @@ import { MeanResponseModel } from './mean-response-model';
 })
 export class AppComponent {
   title = 'Serverless Performance Framework';
-  spfGoAWSMean : MeanResponseModel;
+  spfJava8AWSMean : MeanResponseModel;
+  spfDotNet21AWSMean : MeanResponseModel;
 
   constructor(private spfapiservice: SpfapiService) { 
-    this.showGoMeanAWS()
+    this.showMeanAWS()
   }
 
-  showGoMeanAWS() {
-    this.spfapiservice.getMeanGoLangAWS()
-      .subscribe((data: MeanResponseModel) => this.spfGoAWSMean = { ...data });
+  showMeanAWS() {
+    let platform = "AWS Lambda";
+
+    // Java 8
+    this.spfapiservice.getMean(platform, "java8")
+      .subscribe((data: MeanResponseModel) => this.spfJava8AWSMean = { ...data });
+
+    // .NET 2.1
+    this.spfapiservice.getMean(platform, "dotnet21")
+    .subscribe((data: MeanResponseModel) => this.spfDotNet21AWSMean = { ...data });
+
   }
 }

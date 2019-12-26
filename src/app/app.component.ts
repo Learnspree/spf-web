@@ -16,9 +16,7 @@ export class AppComponent {
   }
 
   showGoMeanAWS() {
-    this.title = "Loading..."
     this.spfapiservice.getMeanGoLangAWS()
       .subscribe((data: MeanResponseModel) => this.spfGoAWSMean = { ...data });
-    this.title = "...Loaded"
   }
 }

@@ -5,19 +5,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 // Data Table
-export interface PeriodicElement {
+export interface MetricsData {
   runtime: string;
   position: number;
-  state: number;
+  state: string;
   mean: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, runtime: 'Hydrogen', state: 1.0079, mean: 'H'},
-  {position: 2, runtime: 'Helium', state: 4.0026, mean: 'He'},
-  {position: 3, runtime: 'Lithium', state: 6.941, mean: 'Li'},
-  {position: 4, runtime: 'Beryllium', state: 9.0122, mean: 'Be'},
-];
 // End Data Table
 
 @Component({
@@ -26,15 +19,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  metricsData: MetricsData[] = [];
   title = 'Serverless Performance Framework';
-  spfJava8AWSMean : MeanResponseModel = {meanDuration: '-1.0', meanBilledDuration: '-1.0'};
-  spfDotNet21AWSMean : MeanResponseModel  = {meanDuration: '-1.0', meanBilledDuration: '-1.0'};
 
   // Data Table
   @ViewChild(MatSort, {static: true}) sort: MatSort;
     
   displayedColumns: string[] = ['position', 'runtime', 'state', 'mean'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource(this.metricsData);
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
@@ -50,11 +42,17 @@ export class AppComponent implements OnInit {
 
     // Java 8
     this.spfapiservice.getMean(platform, "java8")
-      .subscribe((data: MeanResponseModel) => this.spfJava8AWSMean = { ...data });
+      .subscribe((data: MeanResponseModel) => { 
+        this.metricsData.push({position: this.metricsData.length + 1, runtime: 'Java 8', state: 'Cold', mean: data.meanDuration});
+        this.dataSource = new MatTableDataSource(this.metricsData);
+      });
 
     // .NET 2.1
     this.spfapiservice.getMean(platform, "dotnet21")
-    .subscribe((data: MeanResponseModel) => this.spfDotNet21AWSMean = { ...data });
+    .subscribe((data: MeanResponseModel) => { 
+      this.metricsData.push({position: this.metricsData.length + 1, runtime: '.NET 2.1', state: 'Warm', mean: data.meanDuration});
+      this.dataSource = new MatTableDataSource(this.metricsData);
+    });
 
   }
 }

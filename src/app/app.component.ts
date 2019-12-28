@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   dataSource = new MatTableDataSource(this.metricsData);
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
+
   }
   // End Data Table
 
@@ -45,6 +45,7 @@ export class AppComponent implements OnInit {
       .subscribe((data: MeanResponseModel) => { 
         this.metricsData.push({position: this.metricsData.length + 1, runtime: 'Java 8', state: 'Cold', mean: data.meanDuration});
         this.dataSource = new MatTableDataSource(this.metricsData);
+        this.dataSource.sort = this.sort;
       });
 
     // .NET 2.1
@@ -52,6 +53,7 @@ export class AppComponent implements OnInit {
     .subscribe((data: MeanResponseModel) => { 
       this.metricsData.push({position: this.metricsData.length + 1, runtime: '.NET 2.1', state: 'Warm', mean: data.meanDuration});
       this.dataSource = new MatTableDataSource(this.metricsData);
+      this.dataSource.sort = this.sort;
     });
 
   }

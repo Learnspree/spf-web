@@ -31,8 +31,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AppComponent {
   title = 'Serverless Performance Framework';
-  spfJava8AWSMean : MeanResponseModel;
-  spfDotNet21AWSMean : MeanResponseModel;
+  spfJava8AWSMean : MeanResponseModel = {meanDuration: '-1.0', meanBilledDuration: '-1.0'};
+  spfDotNet21AWSMean : MeanResponseModel  = {meanDuration: '-1.0', meanBilledDuration: '-1.0'};
 
   // Data Table
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];

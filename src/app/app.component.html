@@ -358,8 +358,8 @@
   
     <!-- Mean Column -->
     <ng-container matColumnDef="mean">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Mean /<br/>Average<br/>(ms) </th>
-      <td mat-cell *matCellDef="let element"> {{element.mean}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell-align-right"> Mean/Average<br/>(ms) </th>
+      <td mat-cell *matCellDef="let element" class="cell-align-right"> {{element.mean}} </td>
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

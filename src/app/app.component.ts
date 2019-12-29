@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     environment.runtimes.forEach(runtime => {
       this.spfapiservice.getMean(platform, runtime)
         .subscribe((data: MeanResponseModel) => { 
-          this.metricsData.push({runtime: runtime, state: 'Warm/Cold', mean: data.meanDuration});
+          this.metricsData.push({runtime: runtime, state: 'Warm/Cold', mean: parseFloat(data.meanDuration).toFixed(2)});
           this.dataSource = new MatTableDataSource(this.metricsData);
           this.dataSource.sort = this.sort;
       });

@@ -343,12 +343,6 @@
 
   <!-- Data Table - Material -->
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-    <!-- Position Column -->
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-    </ng-container>
   
     <!-- Runtime Column -->
     <ng-container matColumnDef="runtime">

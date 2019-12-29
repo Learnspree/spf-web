@@ -8,7 +8,6 @@ import { environment } from '../environments/environment';
 // Data Table
 export interface MetricsData {
   runtime: string;
-  position: number;
   state: string;
   mean: string;
 }
@@ -22,7 +21,7 @@ export interface MetricsData {
 export class AppComponent implements OnInit {
   metricsData: MetricsData[] = [];
   dataSource = new MatTableDataSource(this.metricsData);
-  displayedColumns: string[] = ['position', 'runtime', 'state', 'mean'];
+  displayedColumns: string[] = ['runtime', 'state', 'mean'];
   title = 'Serverless Performance Framework';
 
   constructor(private spfapiservice: SpfapiService) { 
@@ -37,11 +36,11 @@ export class AppComponent implements OnInit {
     environment.runtimes.forEach(runtime => {
       this.spfapiservice.getMean(platform, runtime)
         .subscribe((data: MeanResponseModel) => { 
-          this.metricsData.push({position: this.metricsData.length + 1, runtime: runtime, state: 'Warm/Cold', mean: data.meanDuration});
+          this.metricsData.push({runtime: runtime, state: 'Warm/Cold', mean: data.meanDuration});
           this.dataSource = new MatTableDataSource(this.metricsData);
           this.dataSource.sort = this.sort;
       });
     });
   }
-  
+
 }

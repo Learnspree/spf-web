@@ -4,6 +4,7 @@ import { MeanResponseModel } from './mean-response-model';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from '../environments/environment';
+import { FunctionState } from './state-enum';
 
 // Data Table
 export interface MetricsData {
@@ -41,10 +42,22 @@ export class AppComponent implements OnInit {
 
   showMeanAWS() {
     let platform = "AWS Lambda";
+
+    // warm-start average
     environment.runtimes.forEach(runtime => {
-      this.spfapiservice.getMean(platform, runtime)
+      this.spfapiservice.getMean(platform, runtime, FunctionState.warm)
         .subscribe((data: MeanResponseModel) => { 
-          this.metricsData.push({runtime: this.displayRuntimeMap[runtime], state: 'Warm/Cold', mean: parseFloat(data.meanDuration).toFixed(2)});
+          this.metricsData.push({runtime: this.displayRuntimeMap[runtime], state: `${FunctionState.warm}`, mean: parseFloat(data.meanDuration).toFixed(2)});
+          this.dataSource = new MatTableDataSource(this.metricsData);
+          this.dataSource.sort = this.sort;
+      });
+    });
+
+    // cold-start average
+    environment.runtimes.forEach(runtime => {
+      this.spfapiservice.getMean(platform, runtime, FunctionState.cold)
+        .subscribe((data: MeanResponseModel) => { 
+          this.metricsData.push({runtime: this.displayRuntimeMap[runtime], state: `${FunctionState.cold}`, mean: parseFloat(data.meanDuration).toFixed(2)});
           this.dataSource = new MatTableDataSource(this.metricsData);
           this.dataSource.sort = this.sort;
       });

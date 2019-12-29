@@ -11,7 +11,7 @@ export class SpfapiService {
   constructor(private http: HttpClient) { }
 
   getMean(platform: string, runtime: string) {
-    let getMeanUrl = `${environment.baseUrl}${environment.envName}/runtimes/${runtime}/mean?platform=${platform}`;
+    let getMeanUrl = `${environment.baseUrl}/${environment.envName}/runtimes/${runtime}/mean?platform=${platform}`;
     return this.http.get<MeanResponseModel>(getMeanUrl);
   }
 }

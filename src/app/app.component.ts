@@ -3,6 +3,7 @@ import { SpfapiService } from './spfapi.service';
 import { MeanResponseModel } from './mean-response-model';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { environment } from '../environments/environment';
 
 // Data Table
 export interface MetricsData {
@@ -20,41 +21,27 @@ export interface MetricsData {
 })
 export class AppComponent implements OnInit {
   metricsData: MetricsData[] = [];
-  title = 'Serverless Performance Framework';
-
-  // Data Table
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-    
-  displayedColumns: string[] = ['position', 'runtime', 'state', 'mean'];
   dataSource = new MatTableDataSource(this.metricsData);
-
-  ngOnInit() {
-
-  }
-  // End Data Table
+  displayedColumns: string[] = ['position', 'runtime', 'state', 'mean'];
+  title = 'Serverless Performance Framework';
 
   constructor(private spfapiservice: SpfapiService) { 
     this.showMeanAWS()
   }
 
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  ngOnInit() { }
+
   showMeanAWS() {
     let platform = "AWS Lambda";
-
-    // Java 8
-    this.spfapiservice.getMean(platform, "java8")
-      .subscribe((data: MeanResponseModel) => { 
-        this.metricsData.push({position: this.metricsData.length + 1, runtime: 'Java 8', state: 'Cold', mean: data.meanDuration});
-        this.dataSource = new MatTableDataSource(this.metricsData);
-        this.dataSource.sort = this.sort;
+    environment.runtimes.forEach(runtime => {
+      this.spfapiservice.getMean(platform, runtime)
+        .subscribe((data: MeanResponseModel) => { 
+          this.metricsData.push({position: this.metricsData.length + 1, runtime: runtime, state: 'Warm/Cold', mean: data.meanDuration});
+          this.dataSource = new MatTableDataSource(this.metricsData);
+          this.dataSource.sort = this.sort;
       });
-
-    // .NET 2.1
-    this.spfapiservice.getMean(platform, "dotnet21")
-    .subscribe((data: MeanResponseModel) => { 
-      this.metricsData.push({position: this.metricsData.length + 1, runtime: '.NET 2.1', state: 'Warm', mean: data.meanDuration});
-      this.dataSource = new MatTableDataSource(this.metricsData);
-      this.dataSource.sort = this.sort;
     });
-
   }
+  
 }

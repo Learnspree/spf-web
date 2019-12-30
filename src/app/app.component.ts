@@ -20,8 +20,10 @@ export interface MetricsData {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  metricsData: MetricsData[] = [];
-  dataSource = new MatTableDataSource(this.metricsData);
+  metricsDataWarm: MetricsData[] = [];
+  metricsDataCold: MetricsData[] = [];
+  dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
+  dataSourceCold = new MatTableDataSource(this.metricsDataCold);
   displayedColumns: string[] = ['runtime', 'state', 'mean'];
   displayRuntimeMap = {
     "java8": "Java 8",
@@ -37,7 +39,9 @@ export class AppComponent implements OnInit {
     this.showMeanAWS()
   }
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild('warmSort', {static: true}) warmSort: MatSort;
+  @ViewChild('coldSort', {static: true}) coldSort: MatSort;
+
   ngOnInit() { }
 
   showMeanAWS() {
@@ -47,9 +51,9 @@ export class AppComponent implements OnInit {
     environment.runtimes.forEach(runtime => {
       this.spfapiservice.getMean(platform, runtime, FunctionState.warm)
         .subscribe((data: MeanResponseModel) => { 
-          this.metricsData.push({runtime: this.displayRuntimeMap[runtime], state: `${FunctionState.warm}`, mean: parseFloat(data.meanDuration).toFixed(2)});
-          this.dataSource = new MatTableDataSource(this.metricsData);
-          this.dataSource.sort = this.sort;
+          this.metricsDataWarm.push({runtime: this.displayRuntimeMap[runtime], state: `${FunctionState.warm}`, mean: parseFloat(data.meanDuration).toFixed(2)});
+          this.dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
+          this.dataSourceWarm.sort = this.warmSort;
       });
     });
 
@@ -57,9 +61,9 @@ export class AppComponent implements OnInit {
     environment.runtimes.forEach(runtime => {
       this.spfapiservice.getMean(platform, runtime, FunctionState.cold)
         .subscribe((data: MeanResponseModel) => { 
-          this.metricsData.push({runtime: this.displayRuntimeMap[runtime], state: `${FunctionState.cold}`, mean: parseFloat(data.meanDuration).toFixed(2)});
-          this.dataSource = new MatTableDataSource(this.metricsData);
-          this.dataSource.sort = this.sort;
+          this.metricsDataCold.push({runtime: this.displayRuntimeMap[runtime], state: `${FunctionState.cold}`, mean: parseFloat(data.meanDuration).toFixed(2)});
+          this.dataSourceCold = new MatTableDataSource(this.metricsDataCold);
+          this.dataSourceCold.sort = this.coldSort;
       });
     });
   }

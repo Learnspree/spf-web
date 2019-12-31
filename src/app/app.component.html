@@ -333,12 +333,18 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Language Runtime </th>
       <td mat-cell *matCellDef="let element"> {{element.runtime}} </td>
     </ng-container>
-  
-    <!-- State Column -->
-    <ng-container matColumnDef="state">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> State <br/>(Cold/Warm) </th>
-      <td mat-cell *matCellDef="let element"> {{element.state}} </td>
-    </ng-container>
+
+    <!-- Max Column -->
+    <ng-container matColumnDef="max">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Maximum<br/>(ms) </th>
+      <td mat-cell *matCellDef="let element"> {{element.max}} </td>
+    </ng-container>    
+
+    <!-- Min Column -->
+    <ng-container matColumnDef="min">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Minimum<br/>(ms) </th>
+      <td mat-cell *matCellDef="let element"> {{element.min}} </td>
+    </ng-container>        
   
     <!-- Mean Column -->
     <ng-container matColumnDef="mean">
@@ -365,18 +371,25 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Language Runtime </th>
       <td mat-cell *matCellDef="let element"> {{element.runtime}} </td>
     </ng-container>
-  
-    <!-- State Column -->
-    <ng-container matColumnDef="state">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> State <br/>(Cold/Warm) </th>
-      <td mat-cell *matCellDef="let element"> {{element.state}} </td>
-    </ng-container>
+
+    <!-- Max Column -->
+    <ng-container matColumnDef="max">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Maximum<br/>(ms) </th>
+      <td mat-cell *matCellDef="let element"> {{element.max}} </td>
+    </ng-container>   
+
+    <!-- Min Column -->
+    <ng-container matColumnDef="min">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Minimum<br/>(ms) </th>
+      <td mat-cell *matCellDef="let element"> {{element.min}} </td>
+    </ng-container>        
+    
   
     <!-- Mean Column -->
     <ng-container matColumnDef="mean">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell-align-right"> Mean/Average<br/>(ms) </th>
       <td mat-cell *matCellDef="let element" class="cell-align-right"> {{element.mean}} </td>
-    </ng-container>
+    </ng-container> 
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

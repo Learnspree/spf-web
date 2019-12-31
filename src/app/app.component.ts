@@ -9,8 +9,9 @@ import { FunctionState } from './state-enum';
 // Data Table
 export interface MetricsData {
   runtime: string;
-  state: string;
   mean: string;
+  max: string;
+  min: string;
 }
 // End Data Table
 
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
   metricsDataCold: MetricsData[] = [];
   dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
   dataSourceCold = new MatTableDataSource(this.metricsDataCold);
-  displayedColumns: string[] = ['runtime', 'state', 'mean'];
+  displayedColumns: string[] = ['runtime', 'max', 'min', 'mean'];
   displayRuntimeMap = {
     "java8": "Java 8",
     "dotnet21": ".NET Core 2.1",
@@ -51,7 +52,7 @@ export class AppComponent implements OnInit {
     environment.runtimes.forEach(runtime => {
       this.spfapiservice.getMean(platform, runtime, FunctionState.warm)
         .subscribe((data: MeanResponseModel) => { 
-          this.metricsDataWarm.push({runtime: this.displayRuntimeMap[runtime], state: `${FunctionState.warm}`, mean: parseFloat(data.meanDuration).toFixed(2)});
+          this.metricsDataWarm.push({runtime: this.displayRuntimeMap[runtime], max: "1.0", min: "1.0", mean: parseFloat(data.meanDuration).toFixed(2)});
           this.dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
           this.dataSourceWarm.sort = this.warmSort;
       });
@@ -61,7 +62,7 @@ export class AppComponent implements OnInit {
     environment.runtimes.forEach(runtime => {
       this.spfapiservice.getMean(platform, runtime, FunctionState.cold)
         .subscribe((data: MeanResponseModel) => { 
-          this.metricsDataCold.push({runtime: this.displayRuntimeMap[runtime], state: `${FunctionState.cold}`, mean: parseFloat(data.meanDuration).toFixed(2)});
+          this.metricsDataCold.push({runtime: this.displayRuntimeMap[runtime], max: "1.0", min: "1.0", mean: parseFloat(data.meanDuration).toFixed(2)});
           this.dataSourceCold = new MatTableDataSource(this.metricsDataCold);
           this.dataSourceCold.sort = this.coldSort;
       });

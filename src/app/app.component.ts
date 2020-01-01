@@ -90,6 +90,7 @@ export class AppComponent implements OnInit {
 
           // now get min and max
           this.getMin(platform, runtime, FunctionState.warm)
+          this.getMax(platform, runtime, FunctionState.warm)
       });
     });
 
@@ -102,7 +103,8 @@ export class AppComponent implements OnInit {
           this.dataSourceCold.sort = this.coldSort;
 
           // now get min and max
-          //this.getMin(platform, runtime, FunctionState.cold)
+          this.getMin(platform, runtime, FunctionState.cold)
+          this.getMax(platform, runtime, FunctionState.cold)
       });
     });
   }

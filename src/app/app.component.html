@@ -326,7 +326,7 @@
   </div>
 
   <!-- Data Table - Warm Start -->
-  <table mat-table [dataSource]="dataSourceWarm" matSort #warmSort="matSort" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSourceWarm" matSort #warmSort="matSort" matSortActive="mean" matSortDirection="desc" class="mat-elevation-z8">
   
     <!-- Runtime Column -->
     <ng-container matColumnDef="runtime">
@@ -364,7 +364,7 @@
   </div>  
   
   <!-- Data Table - Cold Start -->
-  <table mat-table [dataSource]="dataSourceCold" matSort #coldSort="matSort"  class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSourceCold" matSort #coldSort="matSort" matSortActive="mean" matSortDirection="desc" class="mat-elevation-z8">
 
     <!-- Runtime Column -->
     <ng-container matColumnDef="runtime">

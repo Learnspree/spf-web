@@ -53,7 +53,8 @@ export class AppComponent implements OnInit {
         let metricsData = (state == FunctionState.warm ? this.metricsDataWarm : this.metricsDataCold);
         let displayRuntimeValue = this.displayRuntimeMap[runtime];
         let metricForUpdate = metricsData.find(function (entry) { return entry.runtime === displayRuntimeValue; });
-        metricForUpdate.min = parseFloat(data.duration).toFixed(2);
+        console.log("Min Duration for " + data.LanguageRuntime + ": " + data.Duration);
+        metricForUpdate.min = data.Duration;
 
         // update data source
         this.dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
@@ -68,7 +69,7 @@ export class AppComponent implements OnInit {
         let metricsData = (state == FunctionState.warm ? this.metricsDataWarm : this.metricsDataCold);
         let displayRuntimeValue = this.displayRuntimeMap[runtime];
         let metricForUpdate = metricsData.find(function (entry) { return entry.runtime === displayRuntimeValue; });
-        metricForUpdate.max = parseFloat(data.duration).toFixed(2);
+        metricForUpdate.max = parseFloat(data.Duration).toFixed(2);
 
         // update data source
         this.dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
@@ -101,7 +102,7 @@ export class AppComponent implements OnInit {
           this.dataSourceCold.sort = this.coldSort;
 
           // now get min and max
-          this.getMin(platform, runtime, FunctionState.cold)
+          //this.getMin(platform, runtime, FunctionState.cold)
       });
     });
   }

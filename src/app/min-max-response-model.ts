@@ -1,12 +1,12 @@
 
 export interface MinMaxResponseModel {
-    functionName: string;
-    timestamp: string;
-    serverlessPlatformName: string;
-    duration: string;
-    billedDuration: string;
-    functionVersion: string;
-    memoryUsed: string;
-    languageRuntime: string;
-    memorySize: string;
+    FunctionName: string;
+    Timestamp: string;
+    ServerlessPlatformName: string;
+    Duration: string;
+    BilledDuration: string;
+    FunctionVersion: string;
+    MemoryUsed: string;
+    LanguageRuntime: string;
+    MemorySize: string;
 }

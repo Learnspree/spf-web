@@ -1,27 +1,29 @@
-# SpfWebsite
+# Serverless Performance Framework (WebApp)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
+This project originated from a [paper](https://ieeexplore.ieee.org/abstract/document/8605773) on serverless performance as part of MSc Software Architecture @ [Technological University of Dublin (IT Tallaght)](https://www.it-tallaght.ie).
+
+This project is a simple front-end web-app for the [Serverless Performance Framework](https://github.com/Learnspree/Serverless-Language-Performance-Framework) to display the test results of the relative performance and cost of different language implementations in AWS Lambda and other serverless platforms.
+
+## Pre-Requisites
+Use of this application with the SPF backend requires a valid AWS (Amazon Web Services) account.
+
+## Setup
+* npm install -g @angular/cli
+* npm install
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Deployment
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* DEV: `npm run deploy-dev`
+* PROD: `npm run deploy-prod`
 
-## Running end-to-end tests
+## Notes
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.

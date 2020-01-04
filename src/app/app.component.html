@@ -318,6 +318,29 @@
 
   </div>
 
+  <div>
+    <mat-form-field class="spf-filter-select">
+      <mat-label>Serverless Platform:</mat-label>
+      <mat-select [(value)]="selectedPlatform">
+        <mat-option value="AWS Lambda">AWS</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="spf-filter-select">
+      <mat-label>Memory Size:</mat-label>
+      <mat-select [(value)]="selectedMemory">
+        <mat-option value="128">128 MB</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="spf-filter-select">
+      <mat-label>Region:</mat-label>
+      <mat-select [(value)]="selectedRegion">
+        <mat-option value="us-east-1">us-east-1</mat-option>
+      </mat-select>
+    </mat-form-field>    
+  </div>
+
   <!-- Warm Start Header -->
   <div class="card">
 

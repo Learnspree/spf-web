@@ -37,6 +37,11 @@ export class AppComponent implements OnInit {
 
   title = 'Serverless Performance Framework';
 
+  // filter selects
+  selectedMemory = '128';
+  selectedRegion = 'us-east-1';
+  selectedPlatform = 'AWS Lambda'
+
   constructor(private spfapiservice: SpfapiService) { 
     this.showMeanAWS()
   }
@@ -46,8 +51,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() { }
 
-  getMin(platform: string, runtime: string, state: FunctionState) {
-    this.spfapiservice.getMin(platform, runtime, state)
+  getMin(runtime: string, state: FunctionState) {
+    this.spfapiservice.getMin(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion)
       .subscribe((data: MinMaxResponseModel) => { 
         // update existing metrics data with min value
         let metricsData = (state == FunctionState.warm ? this.metricsDataWarm : this.metricsDataCold);
@@ -62,8 +67,8 @@ export class AppComponent implements OnInit {
     });
   }
 
-  getMax(platform: string, runtime: string, state: FunctionState) {
-    this.spfapiservice.getMax(platform, runtime, state)
+  getMax(runtime: string, state: FunctionState) {
+    this.spfapiservice.getMax(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion)
       .subscribe((data: MinMaxResponseModel) => { 
         // update existing metrics data with min value
         let metricsData = (state == FunctionState.warm ? this.metricsDataWarm : this.metricsDataCold);
@@ -78,33 +83,32 @@ export class AppComponent implements OnInit {
   }  
 
   showMeanAWS() {
-    let platform = "AWS Lambda";
 
     // warm-start average
     environment.runtimes.forEach(runtime => {
-      this.spfapiservice.getMean(platform, runtime, FunctionState.warm)
+      this.spfapiservice.getMean(this.selectedPlatform, runtime, FunctionState.warm, this.selectedMemory, this.selectedRegion)
         .subscribe((data: MeanResponseModel) => { 
           this.metricsDataWarm.push({runtime: this.displayRuntimeMap[runtime], max: "", min: "", mean: parseFloat(data.meanDuration).toFixed(2)});
           this.dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
           this.dataSourceWarm.sort = this.warmSort;
 
           // now get min and max
-          this.getMin(platform, runtime, FunctionState.warm)
-          this.getMax(platform, runtime, FunctionState.warm)
+          this.getMin(runtime, FunctionState.warm)
+          this.getMax(runtime, FunctionState.warm)
       });
     });
 
     // cold-start average
     environment.runtimes.forEach(runtime => {
-      this.spfapiservice.getMean(platform, runtime, FunctionState.cold)
+      this.spfapiservice.getMean(this.selectedPlatform, runtime, FunctionState.cold, this.selectedMemory, this.selectedRegion)
         .subscribe((data: MeanResponseModel) => { 
           this.metricsDataCold.push({runtime: this.displayRuntimeMap[runtime], max: "", min: "", mean: parseFloat(data.meanDuration).toFixed(2)});
           this.dataSourceCold = new MatTableDataSource(this.metricsDataCold);
           this.dataSourceCold.sort = this.coldSort;
 
           // now get min and max
-          this.getMin(platform, runtime, FunctionState.cold)
-          this.getMax(platform, runtime, FunctionState.cold)
+          this.getMin(runtime, FunctionState.cold)
+          this.getMax(runtime, FunctionState.cold)
       });
     });
   }

@@ -230,6 +230,13 @@
     margin-right: 4px;
   }
 
+  .spf-filter-select {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    width: 150px;
+  }
 
   /* Responsive Styles */
   @media screen and (max-width: 767px) {
@@ -246,6 +253,10 @@
 
     .card.highlight-card span {
       margin-left: 72px;
+    }
+
+    .spf-filter-select {
+        width: 100px;
     }
 }
 
@@ -276,10 +287,4 @@ color: black;
     margin-left: -150px;
 }
 
-.spf-filter-select {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 50px;
-    margin-bottom: 40px;
-}
 

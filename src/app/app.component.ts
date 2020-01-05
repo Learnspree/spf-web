@@ -22,10 +22,8 @@ export interface MetricsData {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  metricsDataWarm: MetricsData[] = [];
-  metricsDataCold: MetricsData[] = [];
-  dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
-  dataSourceCold = new MatTableDataSource(this.metricsDataCold);
+  metricsData: MetricsData[] = [];
+  dataSource = new MatTableDataSource(this.metricsData);
   displayedColumns: string[] = ['runtime', 'max', 'min', 'mean'];
   displayRuntimeMap = {
     "java8": "Java 8",
@@ -48,8 +46,7 @@ export class AppComponent implements OnInit {
     this.showMeanAWS()
   }
 
-  @ViewChild('warmSort', {static: true}) warmSort: MatSort;
-  @ViewChild('coldSort', {static: true}) coldSort: MatSort;
+  @ViewChild('spfSort', {static: true}) spfSort: MatSort;
 
   ngOnInit() { }
 
@@ -57,15 +54,14 @@ export class AppComponent implements OnInit {
     this.spfapiservice.getMin(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion)
       .subscribe((data: MinMaxResponseModel) => { 
         // update existing metrics data with min value
-        let metricsData = (state == FunctionState.warm ? this.metricsDataWarm : this.metricsDataCold);
         let displayRuntimeValue = this.displayRuntimeMap[runtime];
-        let metricForUpdate = metricsData.find(function (entry) { return entry.runtime === displayRuntimeValue; });
+        let metricForUpdate = this.metricsData.find(function (entry) { return entry.runtime === displayRuntimeValue; });
         console.log("Min Duration for " + data.LanguageRuntime + ": " + data.Duration);
         metricForUpdate.min = data.Duration;
 
         // update data source
-        this.dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
-        this.dataSourceWarm.sort = this.warmSort;
+        this.dataSource = new MatTableDataSource(this.metricsData);
+        this.dataSource.sort = this.spfSort;
     });
   }
 
@@ -73,44 +69,28 @@ export class AppComponent implements OnInit {
     this.spfapiservice.getMax(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion)
       .subscribe((data: MinMaxResponseModel) => { 
         // update existing metrics data with min value
-        let metricsData = (state == FunctionState.warm ? this.metricsDataWarm : this.metricsDataCold);
         let displayRuntimeValue = this.displayRuntimeMap[runtime];
-        let metricForUpdate = metricsData.find(function (entry) { return entry.runtime === displayRuntimeValue; });
+        let metricForUpdate = this.metricsData.find(function (entry) { return entry.runtime === displayRuntimeValue; });
         metricForUpdate.max = parseFloat(data.Duration).toFixed(2);
 
         // update data source
-        this.dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
-        this.dataSourceWarm.sort = this.warmSort;
+        this.dataSource = new MatTableDataSource(this.metricsData);
+        this.dataSource.sort = this.spfSort;
     });
   }  
 
   showMeanAWS() {
 
-    // warm-start average
     environment.runtimes.forEach(runtime => {
       this.spfapiservice.getMean(this.selectedPlatform, runtime, this.selectedState, this.selectedMemory, this.selectedRegion)
         .subscribe((data: MeanResponseModel) => { 
-          this.metricsDataWarm.push({runtime: this.displayRuntimeMap[runtime], max: "", min: "", mean: parseFloat(data.meanDuration).toFixed(2)});
-          this.dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
-          this.dataSourceWarm.sort = this.warmSort;
+          this.metricsData.push({runtime: this.displayRuntimeMap[runtime], max: "", min: "", mean: parseFloat(data.meanDuration).toFixed(2)});
+          this.dataSource = new MatTableDataSource(this.metricsData);
+          this.dataSource.sort = this.spfSort;
 
           // now get min and max
-          this.getMin(runtime, FunctionState.warm)
-          this.getMax(runtime, FunctionState.warm)
-      });
-    });
-
-    // cold-start average
-    environment.runtimes.forEach(runtime => {
-      this.spfapiservice.getMean(this.selectedPlatform, runtime, this.selectedState, this.selectedMemory, this.selectedRegion)
-        .subscribe((data: MeanResponseModel) => { 
-          this.metricsDataCold.push({runtime: this.displayRuntimeMap[runtime], max: "", min: "", mean: parseFloat(data.meanDuration).toFixed(2)});
-          this.dataSourceCold = new MatTableDataSource(this.metricsDataCold);
-          this.dataSourceCold.sort = this.coldSort;
-
-          // now get min and max
-          this.getMin(runtime, FunctionState.cold)
-          this.getMax(runtime, FunctionState.cold)
+          this.getMin(runtime, this.selectedState)
+          this.getMax(runtime, this.selectedState)
       });
     });
   }

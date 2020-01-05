@@ -233,9 +233,21 @@
   .spf-filter-select {
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: 50px;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     width: 150px;
+  }
+
+  .spf-filter-datepicker {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 150px;
+  }
+
+  .spf-filter-section {
+    margin: 10px;
   }
 
   /* Responsive Styles */
@@ -258,6 +270,10 @@
     .spf-filter-select {
         width: 100px;
     }
+
+    .spf-filter-datepicker {
+        width: 100px;
+      }
 }
 
 table {

@@ -30,7 +30,7 @@
 
   </div>
 
-  <div>
+  <div class="spf-filter-section">
     <mat-form-field class="spf-filter-select">
       <mat-label>Serverless Platform:</mat-label>
       <mat-select [(value)]="selectedPlatform" (selectionChange)="refreshMetricsData()">
@@ -62,10 +62,18 @@
   </div>
 
   <!-- State Header -->
-  <div class="card">
+  <div>
+    <mat-form-field class="spf-filter-datepicker">
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerStart" placeholder="Start Date:">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+    </mat-form-field>
 
-    <span>{{selectedState | titlecase}} Start</span>
-
+    <mat-form-field class="spf-filter-datepicker">
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerEnd" placeholder="End Date:">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
   </div>
 
   <!-- Data Table -->

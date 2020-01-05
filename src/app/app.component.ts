@@ -37,11 +37,14 @@ export class AppComponent {
 
   // filter selects
   availableFunctionStates = FunctionState;
+  minDate = new Date(2000, 0, 1);
+  maxDate = new Date(2020, 0, 1);
+  
   selectedMemory = '128';
   selectedRegion = 'us-east-1';
   selectedPlatform = 'AWS Lambda';
   selectedState : FunctionState = FunctionState.warm;
-
+x
   constructor(private spfapiservice: SpfapiService) { 
     this.showMeanAWS()
   }

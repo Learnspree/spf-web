@@ -21,7 +21,7 @@ export interface MetricsData {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   metricsData: MetricsData[] = [];
   dataSource = new MatTableDataSource(this.metricsData);
   displayedColumns: string[] = ['runtime', 'max', 'min', 'mean'];
@@ -47,8 +47,6 @@ export class AppComponent implements OnInit {
   }
 
   @ViewChild('spfSort', {static: true}) spfSort: MatSort;
-
-  ngOnInit() { }
 
   refreshMetricsData() {
     // clear table

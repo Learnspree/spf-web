@@ -38,9 +38,11 @@ export class AppComponent implements OnInit {
   title = 'Serverless Performance Framework';
 
   // filter selects
+  availableFunctionStates = FunctionState;
   selectedMemory = '128';
   selectedRegion = 'us-east-1';
-  selectedPlatform = 'AWS Lambda'
+  selectedPlatform = 'AWS Lambda';
+  selectedState : FunctionState = FunctionState.warm;
 
   constructor(private spfapiservice: SpfapiService) { 
     this.showMeanAWS()
@@ -86,7 +88,7 @@ export class AppComponent implements OnInit {
 
     // warm-start average
     environment.runtimes.forEach(runtime => {
-      this.spfapiservice.getMean(this.selectedPlatform, runtime, FunctionState.warm, this.selectedMemory, this.selectedRegion)
+      this.spfapiservice.getMean(this.selectedPlatform, runtime, this.selectedState, this.selectedMemory, this.selectedRegion)
         .subscribe((data: MeanResponseModel) => { 
           this.metricsDataWarm.push({runtime: this.displayRuntimeMap[runtime], max: "", min: "", mean: parseFloat(data.meanDuration).toFixed(2)});
           this.dataSourceWarm = new MatTableDataSource(this.metricsDataWarm);
@@ -100,7 +102,7 @@ export class AppComponent implements OnInit {
 
     // cold-start average
     environment.runtimes.forEach(runtime => {
-      this.spfapiservice.getMean(this.selectedPlatform, runtime, FunctionState.cold, this.selectedMemory, this.selectedRegion)
+      this.spfapiservice.getMean(this.selectedPlatform, runtime, this.selectedState, this.selectedMemory, this.selectedRegion)
         .subscribe((data: MeanResponseModel) => { 
           this.metricsDataCold.push({runtime: this.displayRuntimeMap[runtime], max: "", min: "", mean: parseFloat(data.meanDuration).toFixed(2)});
           this.dataSourceCold = new MatTableDataSource(this.metricsDataCold);

@@ -327,6 +327,14 @@
     </mat-form-field>
 
     <mat-form-field class="spf-filter-select">
+        <mat-label>Warm or Cold Start:</mat-label>
+        <mat-select [(value)]="selectedState">
+          <mat-option value="{{availableFunctionStates.warm}}">Warm</mat-option>
+          <mat-option value="{{availableFunctionStates.cold}}">Cold</mat-option>
+        </mat-select>
+    </mat-form-field>    
+
+    <mat-form-field class="spf-filter-select">
       <mat-label>Memory Size:</mat-label>
       <mat-select [(value)]="selectedMemory">
         <mat-option value="128">128 MB</mat-option>

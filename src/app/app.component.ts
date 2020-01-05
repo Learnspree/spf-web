@@ -50,6 +50,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit() { }
 
+  refreshMetricsData() {
+    // clear table
+    this.metricsData = [];
+    this.dataSource = new MatTableDataSource(this.metricsData);
+
+    // request fresh data
+    this.showMeanAWS();
+  }
+
   getMin(runtime: string, state: FunctionState) {
     this.spfapiservice.getMin(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion)
       .subscribe((data: MinMaxResponseModel) => { 

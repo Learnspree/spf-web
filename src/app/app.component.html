@@ -321,14 +321,14 @@
   <div>
     <mat-form-field class="spf-filter-select">
       <mat-label>Serverless Platform:</mat-label>
-      <mat-select [(value)]="selectedPlatform">
+      <mat-select [(value)]="selectedPlatform" (selectionChange)="refreshMetricsData()">
         <mat-option value="AWS Lambda">AWS</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="spf-filter-select">
         <mat-label>Warm or Cold Start:</mat-label>
-        <mat-select [(value)]="selectedState">
+        <mat-select [(value)]="selectedState" (selectionChange)="refreshMetricsData()">
           <mat-option value="{{availableFunctionStates.warm}}">Warm</mat-option>
           <mat-option value="{{availableFunctionStates.cold}}">Cold</mat-option>
         </mat-select>
@@ -336,14 +336,14 @@
 
     <mat-form-field class="spf-filter-select">
       <mat-label>Memory Size:</mat-label>
-      <mat-select [(value)]="selectedMemory">
+      <mat-select [(value)]="selectedMemory" (selectionChange)="refreshMetricsData()">
         <mat-option value="128">128 MB</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="spf-filter-select">
       <mat-label>Region:</mat-label>
-      <mat-select [(value)]="selectedRegion">
+      <mat-select [(value)]="selectedRegion" (selectionChange)="refreshMetricsData()">
         <mat-option value="us-east-1">us-east-1</mat-option>
       </mat-select>
     </mat-form-field>    

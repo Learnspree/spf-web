@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { environment } from '../environments/environment';
 import { FunctionState } from './state-enum';
 import { MinMaxResponseModel } from './min-max-response-model';
+import { FormControl } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 // Data Table
 export interface MetricsData {
@@ -37,14 +39,16 @@ export class AppComponent {
 
   // filter selects
   availableFunctionStates = FunctionState;
-  minDate = new Date(2000, 0, 1);
-  maxDate = new Date(2020, 0, 1);
+  minDate = new Date(2019, 0, 1);
+  maxDate = new Date();
   
   selectedMemory = '128';
   selectedRegion = 'us-east-1';
   selectedPlatform = 'AWS Lambda';
   selectedState : FunctionState = FunctionState.warm;
-x
+  selectedStartDate = new FormControl(new Date());
+  selectedEndDate = new FormControl(new Date());
+
   constructor(private spfapiservice: SpfapiService) { 
     this.showMeanAWS()
   }
@@ -58,6 +62,28 @@ x
 
     // request fresh data
     this.showMeanAWS();
+  }
+
+  changeStartDate(event: MatDatepickerInputEvent<Date>) {
+    if (event.value <= this.selectedEndDate.value) {
+      // clear table
+      this.metricsData = [];
+      this.dataSource = new MatTableDataSource(this.metricsData);
+    }
+    else {
+      // TODO - show error message
+    }
+  }
+
+  changeEndDate(event: MatDatepickerInputEvent<Date>) {
+    if (event.value >= this.selectedStartDate.value) {
+      // clear table
+      this.metricsData = [];
+      this.dataSource = new MatTableDataSource(this.metricsData);
+    }
+    else {
+      // TODO - show error message
+    }
   }
 
   getMin(runtime: string, state: FunctionState) {

@@ -64,13 +64,13 @@
   <!-- State Header -->
   <div>
     <mat-form-field class="spf-filter-datepicker">
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerStart" [value]="selectedStartDate.value" (dateChange)="changeStartDate($event)" placeholder="Start Date:">
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerStart" [value]="initialStartDate.value" (dateChange)="changeStartDate($event)" placeholder="Start Date:">
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="spf-filter-datepicker">
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerEnd" [value]="selectedEndDate.value" (dateChange)="changeEndDate($event)" placeholder="End Date:">
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerEnd" [value]="initialEndDate.value" (dateChange)="changeEndDate($event)" placeholder="End Date:">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
     </mat-form-field>

@@ -41,13 +41,15 @@ export class AppComponent {
   availableFunctionStates = FunctionState;
   minDate = new Date(2019, 0, 1);
   maxDate = new Date();
+  initialStartDate = new FormControl(new Date());
+  initialEndDate = new FormControl(new Date());
   
   selectedMemory = '128';
   selectedRegion = 'us-east-1';
   selectedPlatform = 'AWS Lambda';
   selectedState : FunctionState = FunctionState.warm;
-  selectedStartDate = new FormControl(new Date());
-  selectedEndDate = new FormControl(new Date());
+  selectedStartDate = new Date();
+  selectedEndDate = new Date();
 
   constructor(private spfapiservice: SpfapiService) { 
     this.showMeanAWS()
@@ -65,7 +67,10 @@ export class AppComponent {
   }
 
   changeStartDate(event: MatDatepickerInputEvent<Date>) {
-    if (event.value <= this.selectedEndDate.value) {
+    if (event.value <= this.selectedEndDate) {
+
+      this.selectedStartDate = event.value;
+
       // clear table
       this.metricsData = [];
       this.dataSource = new MatTableDataSource(this.metricsData);
@@ -76,7 +81,10 @@ export class AppComponent {
   }
 
   changeEndDate(event: MatDatepickerInputEvent<Date>) {
-    if (event.value >= this.selectedStartDate.value) {
+    if (event.value >= this.selectedStartDate) {
+
+      this.selectedEndDate = event.value;
+
       // clear table
       this.metricsData = [];
       this.dataSource = new MatTableDataSource(this.metricsData);

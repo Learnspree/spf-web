@@ -95,7 +95,7 @@ export class AppComponent {
   }
 
   getMin(runtime: string, state: FunctionState) {
-    this.spfapiservice.getMin(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion)
+    this.spfapiservice.getMin(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
       .subscribe((data: MinMaxResponseModel) => { 
         // update existing metrics data with min value
         let displayRuntimeValue = this.displayRuntimeMap[runtime];
@@ -110,7 +110,7 @@ export class AppComponent {
   }
 
   getMax(runtime: string, state: FunctionState) {
-    this.spfapiservice.getMax(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion)
+    this.spfapiservice.getMax(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
       .subscribe((data: MinMaxResponseModel) => { 
         // update existing metrics data with min value
         let displayRuntimeValue = this.displayRuntimeMap[runtime];
@@ -126,7 +126,7 @@ export class AppComponent {
   showMeanAWS() {
 
     environment.runtimes.forEach(runtime => {
-      this.spfapiservice.getMean(this.selectedPlatform, runtime, this.selectedState, this.selectedMemory, this.selectedRegion)
+      this.spfapiservice.getMean(this.selectedPlatform, runtime, this.selectedState, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
         .subscribe((data: MeanResponseModel) => { 
           this.metricsData.push({runtime: this.displayRuntimeMap[runtime], max: "", min: "", mean: parseFloat(data.meanDuration).toFixed(2)});
           this.dataSource = new MatTableDataSource(this.metricsData);

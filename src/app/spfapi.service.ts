@@ -42,7 +42,7 @@ export class SpfapiService {
       inputDate.setHours(0,0,0,0); // midnight at start of day
     }
     
-    let timestamp = (inputDate.getTime() / 1000).toFixed(0);
+    let timestamp = (inputDate.getTime()).toFixed(0);
     return timestamp;
   }
 }

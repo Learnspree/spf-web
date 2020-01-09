@@ -67,12 +67,14 @@
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerStart" [value]="initialStartDate.value" (dateChange)="changeStartDate($event)" placeholder="Start Date:">
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart></mat-datepicker>
+        <div class="spf-error-control">{{invalidInputs ? "Dates are invalid" : ""}}</div>
     </mat-form-field>
 
     <mat-form-field class="spf-filter-datepicker">
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerEnd" [value]="initialEndDate.value" (dateChange)="changeEndDate($event)" placeholder="End Date:">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
+        <div class="spf-error-control">{{invalidInputs ? "Dates are invalid" : ""}}</div>
     </mat-form-field>
   </div>
 

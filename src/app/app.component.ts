@@ -51,6 +51,8 @@ export class AppComponent {
   selectedStartDate = new Date();
   selectedEndDate = new Date();
 
+  invalidInputs = false;
+
   constructor(private spfapiservice: SpfapiService) { 
     this.showMeanAWS()
   }
@@ -68,31 +70,28 @@ export class AppComponent {
 
   changeStartDate(event: MatDatepickerInputEvent<Date>) {
     if (event.value <= this.selectedEndDate) {
-
+      this.invalidInputs = false;
       this.selectedStartDate = event.value;
 
-      // clear table
-      this.metricsData = [];
-      this.dataSource = new MatTableDataSource(this.metricsData);
+      this.refreshMetricsData();
     }
     else {
-      // TODO - show error message
+      this.invalidInputs = true;
     }
   }
 
   changeEndDate(event: MatDatepickerInputEvent<Date>) {
     if (event.value >= this.selectedStartDate) {
-
+      this.invalidInputs = false;
       this.selectedEndDate = event.value;
 
-      // clear table
-      this.metricsData = [];
-      this.dataSource = new MatTableDataSource(this.metricsData);
+      this.refreshMetricsData();
     }
     else {
-      // TODO - show error message
+      this.invalidInputs = true;
     }
   }
+
 
   getMin(runtime: string, state: FunctionState) {
     this.spfapiservice.getMin(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)

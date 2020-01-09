@@ -39,9 +39,9 @@ export class AppComponent {
 
   // filter selects
   availableFunctionStates = FunctionState;
-  minDate = new Date(2019, 0, 1);
+  minDate = new Date(2019, 11, 1);
   maxDate = new Date();
-  initialStartDate = new FormControl(new Date());
+  initialStartDate = new FormControl(new Date(new Date().setDate(new Date().getDate()-30)));
   initialEndDate = new FormControl(new Date());
   
   selectedMemory = '128';

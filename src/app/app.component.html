@@ -62,7 +62,7 @@
   </div>
 
   <!-- State Header -->
-  <div>
+  <div class="spf-filter-section">
     <mat-form-field class="spf-filter-datepicker">
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="pickerStart" [value]="initialStartDate.value" (dateChange)="changeStartDate($event)" placeholder="Start Date:">
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>

@@ -252,6 +252,7 @@
 
   .spf-filter-section {
     margin: 10px;
+    margin: 0 auto;
   }
 
   /* Responsive Styles */
@@ -278,6 +279,13 @@
     .spf-filter-datepicker {
         width: 100px;
       }
+
+    .main-logo {
+        padding-top: 10px;
+        width: 20px;
+        height: 20px;
+        margin-left: -150px;
+    }
 }
 
 table {
@@ -296,7 +304,7 @@ color: black;
 
 .top-logo {
     padding-top: 10px;
-    width: 60px;
+    width: 50px;
     height: 40px;
 }
 

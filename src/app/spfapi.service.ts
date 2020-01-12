@@ -4,6 +4,7 @@ import { MeanResponseModel } from './mean-response-model';
 import { environment } from '../environments/environment';
 import { FunctionState } from './state-enum';
 import { MinMaxResponseModel } from './min-max-response-model';
+import { SummaryResponseModel } from './summary-response-model';
 
 enum TimestampMarker {
   DayStart = "start",
@@ -18,6 +19,11 @@ export class SpfapiService {
   constructor(private http: HttpClient) { }
 
   // NOTE - region query param commented out (and zone not used either) until we start saving that in the metrics data
+
+  getSummary(platform: string, runtime: string, state: FunctionState, memory: string, region: string, startDate: Date, endDate: Date) {
+    let getSummaryUrl = `${environment.baseUrl}/${environment.envName}/runtimes/${runtime}/summary?platform=${platform}&state=${state}&memory=${memory}&startdate=${this.getTimestampForDate(startDate, TimestampMarker.DayStart)}&enddate=${this.getTimestampForDate(endDate, TimestampMarker.DayEnd)}`; // &region=${region}`;
+    return this.http.get<SummaryResponseModel>(getSummaryUrl);
+  }
 
   getMean(platform: string, runtime: string, state: FunctionState, memory: string, region: string, startDate: Date, endDate: Date) {
     let getMeanUrl = `${environment.baseUrl}/${environment.envName}/runtimes/${runtime}/mean?platform=${platform}&state=${state}&memory=${memory}&startdate=${this.getTimestampForDate(startDate, TimestampMarker.DayStart)}&enddate=${this.getTimestampForDate(endDate, TimestampMarker.DayEnd)}`; // &region=${region}`;

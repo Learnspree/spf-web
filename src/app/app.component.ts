@@ -8,6 +8,7 @@ import { FunctionState } from './state-enum';
 import { MinMaxResponseModel } from './min-max-response-model';
 import { FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { SummaryResponseModel } from './summary-response-model';
 
 // Data Table
 export interface MetricsData {
@@ -54,7 +55,7 @@ export class AppComponent {
   invalidInputs = false;
 
   constructor(private spfapiservice: SpfapiService) { 
-    this.showMeanAWS()
+    this.showAWSData()
   }
 
   @ViewChild('spfSort', {static: true}) spfSort: MatSort;
@@ -65,7 +66,7 @@ export class AppComponent {
     this.dataSource = new MatTableDataSource(this.metricsData);
 
     // request fresh data
-    this.showMeanAWS();
+    this.showAWSData();
   }
 
   changeStartDate(event: MatDatepickerInputEvent<Date>) {
@@ -122,19 +123,18 @@ export class AppComponent {
     });
   }  
 
-  showMeanAWS() {
+  getSummary(runtime: string, state: FunctionState) {
+    this.spfapiservice.getSummary(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
+      .subscribe((data: SummaryResponseModel) => { 
+        this.metricsData.push({runtime: this.displayRuntimeMap[runtime], max: parseFloat(data.maxExecution.Duration).toFixed(2), min: parseFloat(data.minExecution.Duration).toFixed(2), mean: parseFloat(data.meanDuration).toFixed(2)});
+        this.dataSource = new MatTableDataSource(this.metricsData);
+        this.dataSource.sort = this.spfSort;
+    });
+  }  
 
+  showAWSData() {
     environment.runtimes.forEach(runtime => {
-      this.spfapiservice.getMean(this.selectedPlatform, runtime, this.selectedState, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
-        .subscribe((data: MeanResponseModel) => { 
-          this.metricsData.push({runtime: this.displayRuntimeMap[runtime], max: "", min: "", mean: parseFloat(data.meanDuration).toFixed(2)});
-          this.dataSource = new MatTableDataSource(this.metricsData);
-          this.dataSource.sort = this.spfSort;
-
-          // now get min and max
-          this.getMin(runtime, this.selectedState)
-          this.getMax(runtime, this.selectedState)
-      });
+      this.getSummary(runtime, this.selectedState);
     });
   }
 

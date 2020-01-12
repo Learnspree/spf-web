@@ -40,10 +40,11 @@ export class AppComponent {
 
   // filter selects
   availableFunctionStates = FunctionState;
-  minDate = new Date(2019, 11, 1);
+  minDate = new Date(2020, 0, 12); // official prod records started 12th Jan 2020
   maxDate = new Date();
-  initialStartDate = new FormControl(new Date(new Date().setDate(new Date().getDate()-30)));
+  initialStartDate = new FormControl(new Date());
   initialEndDate = new FormControl(new Date());
+
   
   selectedMemory = '128';
   selectedRegion = 'us-east-1';
@@ -54,7 +55,12 @@ export class AppComponent {
 
   invalidInputs = false;
 
-  constructor(private spfapiservice: SpfapiService) { 
+  constructor(private spfapiservice: SpfapiService) {
+    let thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate()-30));
+    let actualStartDate = (this.minDate > thirtyDaysAgo) ? this.minDate : thirtyDaysAgo;
+    this.initialStartDate = new FormControl(actualStartDate);
+    this.initialEndDate = new FormControl(new Date());
+  
     this.showAWSData()
   }
 

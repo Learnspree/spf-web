@@ -125,7 +125,7 @@
   }
 
   .card.card.highlight-card span {
-    margin-left: 60px;
+    margin-left: 0px;
   }
 
   a,
@@ -281,10 +281,12 @@
       }
 
     .main-logo {
-        padding-top: 10px;
-        width: 20px;
-        height: 20px;
-        margin-left: -150px;
+        width: 0px;
+        height: 0px;
+    }
+
+    .toolbar {
+        height: 80px;
     }
 }
 

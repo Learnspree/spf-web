@@ -5,4 +5,5 @@ export interface SummaryResponseModel {
     meanBilledDuration: string;
     maxExecution: MinMaxResponseModel;
     minExecution: MinMaxResponseModel;
+    count: Number;
 }

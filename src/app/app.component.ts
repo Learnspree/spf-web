@@ -16,6 +16,7 @@ export interface MetricsData {
   mean: string;
   max: string;
   min: string;
+  count: Number;
 }
 // End Data Table
 
@@ -133,7 +134,13 @@ export class AppComponent {
   getSummary(runtime: string, state: FunctionState) {
     this.spfapiservice.getSummary(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
       .subscribe((data: SummaryResponseModel) => { 
-        this.metricsData.push({runtime: this.displayRuntimeMap[runtime], max: parseFloat(data.maxExecution.Duration).toFixed(2), min: parseFloat(data.minExecution.Duration).toFixed(2), mean: parseFloat(data.meanDuration).toFixed(2)});
+        this.metricsData.push({
+          runtime: this.displayRuntimeMap[runtime], 
+          max: parseFloat(data.maxExecution.Duration).toFixed(2), 
+          min: parseFloat(data.minExecution.Duration).toFixed(2), 
+          mean: parseFloat(data.meanDuration).toFixed(2),
+          count: data.count
+        });
         this.dataSource = new MatTableDataSource(this.metricsData);
         this.dataSource.sort = this.spfSort;
     });

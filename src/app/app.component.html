@@ -84,7 +84,7 @@
     <!-- Runtime Column -->
     <ng-container matColumnDef="runtime">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Language<br/>Runtime<br/>(# records)</th>
-      <td mat-cell *matCellDef="let element"> {{element.runtime}} <br/> <i>({{element.count}} records)</i> </td>
+      <td mat-cell *matCellDef="let element"> {{element.runtime}} <br/> <span class=spf-recordcount>({{element.count}})</span> </td>
     </ng-container> 
 
     <!-- Max Column -->

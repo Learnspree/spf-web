@@ -42,7 +42,7 @@ export class AppComponent {
 
   // filter selects
   availableFunctionStates = FunctionState;
-  minDate = new Date(2020, 0, 12); // official prod records started 12th Jan 2020
+  minDate = new Date(2020, 0, 13); // official prod records started 12th Jan 2020
   maxDate = new Date();
   initialStartDate = new FormControl(new Date());
   initialEndDate = new FormControl(new Date());

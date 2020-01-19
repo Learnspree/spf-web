@@ -52,8 +52,8 @@ export class AppComponent {
   selectedRegion = 'us-east-1';
   selectedPlatform = 'AWS Lambda';
   selectedState : FunctionState = FunctionState.warm;
-  selectedStartDate = new Date();
-  selectedEndDate = new Date();
+  selectedStartDate = new Date(this.minDate);
+  selectedEndDate = new Date(this.maxDate);
 
   invalidInputs = false;
 

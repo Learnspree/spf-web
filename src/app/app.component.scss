@@ -231,6 +231,27 @@
     margin-right: 4px;
   }
 
+  /* unvisited link */
+  .spf-darkbg-anchor a:link {
+    color: yellow;
+  }
+  
+  /* visited link */
+  .spf-darkbg-anchor a:visited {
+    color: yellow;
+  }
+  
+  /* mouse over link */
+  .spf-darkbg-anchor a:hover {
+    color: yellow;
+    text-decoration: underline;
+  }
+  
+  /* selected link */
+  .spf-darkbg-anchor a:active {
+    color: white;
+  }
+
   .spf-filter-select {
     margin-left: 20px;
     margin-right: 20px;

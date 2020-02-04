@@ -17,6 +17,7 @@ export interface MetricsData {
   max: string;
   min: string;
   count: Number;
+  costPerMillion: string;
 }
 // End Data Table
 
@@ -28,7 +29,7 @@ export interface MetricsData {
 export class AppComponent {
   metricsData: MetricsData[] = [];
   dataSource = new MatTableDataSource(this.metricsData);
-  displayedColumns: string[] = ['runtime', 'max', 'min', 'mean'];
+  displayedColumns: string[] = ['runtime', 'mean', 'max', 'min', 'costPerMillion'];
   displayRuntimeMap = {
     "java8": "Java 8",
     "dotnet21": ".NET Core 2.1",
@@ -101,36 +102,6 @@ export class AppComponent {
     }
   }
 
-
-  getMin(runtime: string, state: FunctionState) {
-    this.spfapiservice.getMin(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
-      .subscribe((data: MinMaxResponseModel) => { 
-        // update existing metrics data with min value
-        let displayRuntimeValue = this.displayRuntimeMap[runtime];
-        let metricForUpdate = this.metricsData.find(function (entry) { return entry.runtime === displayRuntimeValue; });
-        console.log("Min Duration for " + data.LanguageRuntime + ": " + data.Duration);
-        metricForUpdate.min = data.Duration;
-
-        // update data source
-        this.dataSource = new MatTableDataSource(this.metricsData);
-        this.dataSource.sort = this.spfSort;
-    });
-  }
-
-  getMax(runtime: string, state: FunctionState) {
-    this.spfapiservice.getMax(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
-      .subscribe((data: MinMaxResponseModel) => { 
-        // update existing metrics data with min value
-        let displayRuntimeValue = this.displayRuntimeMap[runtime];
-        let metricForUpdate = this.metricsData.find(function (entry) { return entry.runtime === displayRuntimeValue; });
-        metricForUpdate.max = parseFloat(data.Duration).toFixed(2);
-
-        // update data source
-        this.dataSource = new MatTableDataSource(this.metricsData);
-        this.dataSource.sort = this.spfSort;
-    });
-  }  
-
   getSummary(runtime: string, state: FunctionState) {
     this.spfapiservice.getSummary(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
       .subscribe((data: SummaryResponseModel) => { 
@@ -139,7 +110,8 @@ export class AppComponent {
           max: parseFloat(data.maxExecution.Duration).toFixed(2), 
           min: parseFloat(data.minExecution.Duration).toFixed(2), 
           mean: parseFloat(data.meanDuration).toFixed(2),
-          count: data.count
+          count: data.count,
+          costPerMillion: `$${parseFloat(`${data.costPerMillion}`).toFixed(2)}`
         });
         this.dataSource = new MatTableDataSource(this.metricsData);
         this.dataSource.sort = this.spfSort;

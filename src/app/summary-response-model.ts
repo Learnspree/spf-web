@@ -6,4 +6,6 @@ export interface SummaryResponseModel {
     maxExecution: MinMaxResponseModel;
     minExecution: MinMaxResponseModel;
     count: Number;
+    cost: Number;
+    costPerMillion: Number;
 }

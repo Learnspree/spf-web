@@ -34,6 +34,7 @@ export class AppComponent {
     "java8": "Java 8",
     "dotnet21": ".NET Core 2.1",
     "python36": "Python 3.6",
+    "python38": "Python 3.8",
     "node810": "Node 8.10",
     "nodejs12x": "NodeJS 12.x",
     "go": "Golang 1.x"

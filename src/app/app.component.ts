@@ -36,6 +36,7 @@ export class AppComponent {
     "python36": "Python 3.6",
     "python38": "Python 3.8",
     "node810": "Node 8.10",
+    "nodejs10x": "NodeJS 10.x",
     "nodejs12x": "NodeJS 12.x",
     "go": "Golang 1.x"
   };

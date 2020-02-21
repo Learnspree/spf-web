@@ -32,13 +32,16 @@ export class AppComponent {
   displayedColumns: string[] = ['runtime', 'mean', 'max', 'min', 'costPerMillion'];
   displayRuntimeMap = {
     "java8": "Java 8",
+    "java11": "Java 11",
     "dotnet21": ".NET Core 2.1",
     "python36": "Python 3.6",
     "python38": "Python 3.8",
     "node810": "Node 8.10",
     "nodejs10x": "NodeJS 10.x",
     "nodejs12x": "NodeJS 12.x",
-    "go": "Golang 1.x"
+    "go": "Golang 1.x",
+    "ruby25": "Ruby 2.5",
+    "ruby27": "Ruby 2.7"
   };
 
   title = 'Serverless Performance Framework';

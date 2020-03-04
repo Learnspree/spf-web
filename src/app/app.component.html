@@ -79,6 +79,8 @@
     </mat-form-field>
   </div>
 
+  <div *ngIf="(selectedState == availableFunctionStates.cold) && (selectedStartDate < coldStartIncludesInitDurationStartDate)" class="spf-warning-message">Note that cold-start tests recorded before 5th March 2020 only recorded execution duration and did not record initialization time</div> 
+
   <!-- Data Table -->
   <table mat-table [dataSource]="dataSource" matSort #spfSort="matSort" matSortActive="mean" matSortDirection="desc" class="mat-elevation-z8">
   

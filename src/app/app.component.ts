@@ -52,6 +52,7 @@ export class AppComponent {
   maxDate = new Date();
   initialStartDate = new FormControl(new Date());
   initialEndDate = new FormControl(new Date());
+  coldStartIncludesInitDurationStartDate = new Date(2020, 2, 5); // started storing init-duration for cold start on 5th March 2020
 
   
   selectedMemory = '128';

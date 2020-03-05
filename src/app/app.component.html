@@ -99,13 +99,13 @@
     <!-- Max Column -->
     <ng-container matColumnDef="max">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Max<br/>Duration<br/>{{(selectedState == availableFunctionStates.cold && (selectedStartDate >= coldStartIncludesInitDurationStartDate)) ? "(init time*)" : ""}}</th>
-      <td mat-cell *matCellDef="let element"> {{element.max}} <br/> <span *ngIf="(selectedState == availableFunctionStates.cold) && (selectedStartDate >= coldStartIncludesInitDurationStartDate)" class=spf-recordcount>({{element.initDuration}})</span> </td>
+      <td mat-cell *matCellDef="let element"> {{element.max}} <br/> <span *ngIf="(selectedState == availableFunctionStates.cold) && (selectedStartDate >= coldStartIncludesInitDurationStartDate)" class=spf-recordcount>({{element.initMax}})</span> </td>
     </ng-container>    
 
     <!-- Min Column -->
     <ng-container matColumnDef="min">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Min<br/>Duration<br/>{{(selectedState == availableFunctionStates.cold && (selectedStartDate >= coldStartIncludesInitDurationStartDate)) ? "(init time*)" : ""}}</th>
-      <td mat-cell *matCellDef="let element"> {{element.min}} <br/> <span *ngIf="(selectedState == availableFunctionStates.cold) && (selectedStartDate >= coldStartIncludesInitDurationStartDate)" class=spf-recordcount>({{element.initDuration}})</span> </td>
+      <td mat-cell *matCellDef="let element"> {{element.min}} <br/> <span *ngIf="(selectedState == availableFunctionStates.cold) && (selectedStartDate >= coldStartIncludesInitDurationStartDate)" class=spf-recordcount>({{element.initMin}})</span> </td>
     </ng-container>      
     
     <!-- Cost Column -->

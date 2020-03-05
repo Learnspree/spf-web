@@ -18,6 +18,8 @@ export interface MetricsData {
   min: string;
   count: Number;
   costPerMillion: string;
+  initMin: string;
+  initMax: string;
 }
 // End Data Table
 
@@ -118,7 +120,9 @@ export class AppComponent {
             min: parseFloat(data.minExecution.Duration).toFixed(2), 
             mean: parseFloat(data.meanDuration).toFixed(2),
             count: data.count,
-            costPerMillion: `$${parseFloat(`${data.costPerMillion}`).toFixed(2)}`
+            costPerMillion: `$${parseFloat(`${data.costPerMillion}`).toFixed(2)}`,
+            initMin: parseFloat(data.minExecution.InitDuration).toFixed(2),
+            initMax: parseFloat(data.maxExecution.InitDuration).toFixed(2)
           });
           this.dataSource = new MatTableDataSource(this.metricsData);
           this.dataSource.sort = this.spfSort;

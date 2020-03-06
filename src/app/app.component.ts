@@ -116,8 +116,8 @@ export class AppComponent {
         if (data.minExecution != null) {
           this.metricsData.push({
             runtime: this.displayRuntimeMap[runtime], 
-            max: parseFloat(data.maxExecution.Duration).toFixed(2), 
-            min: parseFloat(data.minExecution.Duration).toFixed(2), 
+            max: parseFloat(this.getExecutionDuration(data.maxExecution)).toFixed(2), 
+            min: parseFloat(this.getExecutionDuration(data.minExecution)).toFixed(2), 
             mean: parseFloat(data.meanDuration).toFixed(2),
             count: data.count,
             costPerMillion: `$${parseFloat(`${data.costPerMillion}`).toFixed(2)}`,
@@ -134,6 +134,12 @@ export class AppComponent {
     environment.runtimes.forEach(runtime => {
       this.getSummary(runtime, this.selectedState);
     });
+  }
+
+  getExecutionDuration(executionResponseData : MinMaxResponseModel) {
+    return (executionResponseData.TotalDuration === undefined) ?
+        executionResponseData.Duration :
+        executionResponseData.TotalDuration; 
   }
 
 } 

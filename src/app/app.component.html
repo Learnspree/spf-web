@@ -92,7 +92,8 @@
 
     <!-- Mean Column -->
     <ng-container matColumnDef="mean">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Average<br/>Duration<br/></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Average<br/>{{(selectedState == availableFunctionStates.cold && (selectedStartDate >= coldStartIncludesInitDurationStartDate)) ? "Total" : ""}}
+          <br *ngIf="(selectedState == availableFunctionStates.cold && (selectedStartDate >= coldStartIncludesInitDurationStartDate))"/> Duration</th>
         <td mat-cell *matCellDef="let element"> {{element.mean}} </td>
       </ng-container>
 
@@ -118,7 +119,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   
-  <div class="spf-table-subtext" *ngIf="(selectedState == availableFunctionStates.cold) && (selectedStartDate >= coldStartIncludesInitDurationStartDate)">*Cold-start duration includes initialization time shown</div> 
+  <div class="spf-table-subtext" *ngIf="(selectedState == availableFunctionStates.cold) && (selectedStartDate >= coldStartIncludesInitDurationStartDate)">*Cold-start duration includes initialization time shown underneath. Cost calculation is based only on execution duration and does not include init time as per AWS billing.</div> 
 
   <!-- Footer -->
   <footer>

@@ -9,4 +9,6 @@ export interface MinMaxResponseModel {
     MemoryUsed: string;
     LanguageRuntime: string;
     MemorySize: string;
+    InitDuration: string;
+    TotalDuration: string;
 }

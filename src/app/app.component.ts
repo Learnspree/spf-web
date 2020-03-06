@@ -18,6 +18,8 @@ export interface MetricsData {
   min: string;
   count: Number;
   costPerMillion: string;
+  initMin: string;
+  initMax: string;
 }
 // End Data Table
 
@@ -114,11 +116,13 @@ export class AppComponent {
         if (data.minExecution != null) {
           this.metricsData.push({
             runtime: this.displayRuntimeMap[runtime], 
-            max: parseFloat(data.maxExecution.Duration).toFixed(2), 
-            min: parseFloat(data.minExecution.Duration).toFixed(2), 
+            max: parseFloat(this.getExecutionDuration(data.maxExecution)).toFixed(2), 
+            min: parseFloat(this.getExecutionDuration(data.minExecution)).toFixed(2), 
             mean: parseFloat(data.meanDuration).toFixed(2),
             count: data.count,
-            costPerMillion: `$${parseFloat(`${data.costPerMillion}`).toFixed(2)}`
+            costPerMillion: `$${parseFloat(`${data.costPerMillion}`).toFixed(2)}`,
+            initMin: parseFloat(data.minExecution.InitDuration).toFixed(2),
+            initMax: parseFloat(data.maxExecution.InitDuration).toFixed(2)
           });
           this.dataSource = new MatTableDataSource(this.metricsData);
           this.dataSource.sort = this.spfSort;
@@ -130,6 +134,12 @@ export class AppComponent {
     environment.runtimes.forEach(runtime => {
       this.getSummary(runtime, this.selectedState);
     });
+  }
+
+  getExecutionDuration(executionResponseData : MinMaxResponseModel) {
+    return (executionResponseData.TotalDuration === undefined) ?
+        executionResponseData.Duration :
+        executionResponseData.TotalDuration; 
   }
 
 } 

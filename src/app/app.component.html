@@ -22,7 +22,7 @@
         <mat-grid-tile>
           <mat-form-field class="spf-filter-select">
             <mat-label>Serverless Platform:</mat-label>
-            <mat-select [(value)]="selectedPlatform" (selectionChange)="refreshMetricsData()">
+            <mat-select [(value)]="selectedPlatform" (selectionChange)="updateServerlessPlatformSelection()">
               <mat-option value="AWS Lambda">AWS</mat-option>
               <mat-option value="Azure Functions">Azure</mat-option>
             </mat-select>

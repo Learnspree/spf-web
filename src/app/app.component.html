@@ -24,6 +24,7 @@
             <mat-label>Serverless Platform:</mat-label>
             <mat-select [(value)]="selectedPlatform" (selectionChange)="refreshMetricsData()">
               <mat-option value="AWS Lambda">AWS</mat-option>
+              <mat-option value="Azure Functions">Azure</mat-option>
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
@@ -43,8 +44,8 @@
               <mat-label>Memory Size:</mat-label>
               <mat-select [(value)]="selectedMemory" (selectionChange)="refreshMetricsData()">
                 <mat-option value="128">128 MB</mat-option>
-                <mat-option value="256">256 MB</mat-option>
-                <mat-option value="512">512 MB</mat-option>
+                <mat-option *ngIf="(selectedPlatform == 'AWS Lambda')" value="256">256 MB</mat-option>
+                <mat-option *ngIf="(selectedPlatform == 'AWS Lambda')" value="512">512 MB</mat-option>
               </mat-select>
           </mat-form-field>
         </mat-grid-tile>    
@@ -53,7 +54,8 @@
           <mat-form-field class="spf-filter-select">
             <mat-label>Region:</mat-label>
             <mat-select [(value)]="selectedRegion" (selectionChange)="refreshMetricsData()">
-              <mat-option value="us-east-1">us-east-1</mat-option>
+              <mat-option *ngIf="(selectedPlatform == 'AWS Lambda')" value="us-east-1">us-east-1</mat-option>
+              <mat-option *ngIf="(selectedPlatform == 'Azure Functions')" value="east-us">East US</mat-option>
             </mat-select>
           </mat-form-field>   
         </mat-grid-tile> 
@@ -79,7 +81,7 @@
     </mat-form-field>
   </div>
 
-  <div *ngIf="(selectedState == availableFunctionStates.cold) && (selectedStartDate < coldStartIncludesInitDurationStartDate)" class="spf-warning-message">Note that cold-start tests recorded before 5th March 2020 only recorded execution duration and did not record initialization time</div> 
+  <div *ngIf="(selectedPlatform == 'AWS Lambda') && (selectedState == availableFunctionStates.cold) && (selectedStartDate < coldStartIncludesInitDurationStartDate)" class="spf-warning-message">Note that cold-start tests recorded before 5th March 2020 only recorded execution duration and did not record initialization time</div> 
 
   <!-- Data Table -->
   <table mat-table [dataSource]="dataSource" matSort #spfSort="matSort" matSortActive="mean" matSortDirection="asc" class="mat-elevation-z8">

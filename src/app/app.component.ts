@@ -43,7 +43,8 @@ export class AppComponent {
     "nodejs12x": "NodeJS 12.x",
     "go": "Golang 1.x",
     "ruby25": "Ruby 2.5",
-    "ruby27": "Ruby 2.7"
+    "ruby27": "Ruby 2.7",
+    "dotnet31csx": ".NET Core 3.1"
   };
 
   title = 'Serverless Performance Framework';
@@ -76,6 +77,13 @@ export class AppComponent {
   }
 
   @ViewChild('spfSort', {static: true}) spfSort: MatSort;
+
+  updateServerlessPlatformSelection() {
+    // select first option in dropdowns that have different contents depending on platform
+    this.selectedMemory = '128';
+    this.selectedRegion = (this.selectedPlatform == 'AWS Lambda') ? 'us-east-1' : 'east-us';
+    this.refreshMetricsData();
+  }
 
   refreshMetricsData() {
     // clear table
@@ -131,7 +139,8 @@ export class AppComponent {
   }  
 
   showAWSData() {
-    environment.runtimes.forEach(runtime => {
+    let runtimes = (this.selectedPlatform == 'AWS Lambda') ? environment.aws_runtimes : environment.azure_runtimes;
+    runtimes.forEach(runtime => {
       this.getSummary(runtime, this.selectedState);
     });
   }

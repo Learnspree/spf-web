@@ -82,6 +82,7 @@
   </div>
 
   <div *ngIf="(selectedPlatform == 'AWS Lambda') && (selectedState == availableFunctionStates.cold) && (selectedStartDate < coldStartIncludesInitDurationStartDate)" class="spf-warning-message">Note that cold-start tests recorded before 5th March 2020 only recorded execution duration and did not record initialization time</div> 
+  <div *ngIf="(errorMessage != '')" class="spf-error-message">{{errorMessage}}</div> 
 
   <!-- Data Table -->
   <table mat-table [dataSource]="dataSource" matSort #spfSort="matSort" matSortActive="mean" matSortDirection="asc" class="mat-elevation-z8">

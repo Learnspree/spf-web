@@ -66,6 +66,7 @@ export class AppComponent {
   selectedEndDate = new Date(this.maxDate);
 
   invalidInputs = false;
+  errorMessage = "";
 
   constructor(private spfapiservice: SpfapiService) {
     let thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate()-30));
@@ -89,6 +90,7 @@ export class AppComponent {
     // clear table
     this.metricsData = [];
     this.dataSource = new MatTableDataSource(this.metricsData);
+    this.errorMessage = "";
 
     // request fresh data
     this.showAWSData();
@@ -122,6 +124,7 @@ export class AppComponent {
     this.spfapiservice.getSummary(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
       .subscribe((data: SummaryResponseModel) => { 
         if (data.minExecution != null) {
+          // we got valid data
           this.metricsData.push({
             runtime: this.displayRuntimeMap[runtime], 
             max: parseFloat(this.getExecutionDuration(data.maxExecution)).toFixed(2), 
@@ -134,6 +137,15 @@ export class AppComponent {
           });
           this.dataSource = new MatTableDataSource(this.metricsData);
           this.dataSource.sort = this.spfSort;
+        }
+        else {
+          // an error occurred - report error to screen
+          if (this.errorMessage == "") {
+            this.errorMessage = `Failed to retrieve data for the following runtimes (please try again later): ${this.displayRuntimeMap[runtime]}`;
+          }
+          else {
+            this.errorMessage += `, ${this.displayRuntimeMap[runtime]}`;
+          }
         }
     });
   }  

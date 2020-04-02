@@ -43,7 +43,8 @@ export class AppComponent {
     "nodejs12x": "NodeJS 12.x",
     "go": "Golang 1.x",
     "ruby25": "Ruby 2.5",
-    "ruby27": "Ruby 2.7"
+    "ruby27": "Ruby 2.7",
+    "dotnet31csx": ".NET Core 3.1"
   };
 
   title = 'Serverless Performance Framework';
@@ -65,6 +66,7 @@ export class AppComponent {
   selectedEndDate = new Date(this.maxDate);
 
   invalidInputs = false;
+  errorMessage = "";
 
   constructor(private spfapiservice: SpfapiService) {
     let thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate()-30));
@@ -77,10 +79,18 @@ export class AppComponent {
 
   @ViewChild('spfSort', {static: true}) spfSort: MatSort;
 
+  updateServerlessPlatformSelection() {
+    // select first option in dropdowns that have different contents depending on platform
+    this.selectedMemory = '128';
+    this.selectedRegion = (this.selectedPlatform == 'AWS Lambda') ? 'us-east-1' : 'east-us';
+    this.refreshMetricsData();
+  }
+
   refreshMetricsData() {
     // clear table
     this.metricsData = [];
     this.dataSource = new MatTableDataSource(this.metricsData);
+    this.errorMessage = "";
 
     // request fresh data
     this.showAWSData();
@@ -114,6 +124,7 @@ export class AppComponent {
     this.spfapiservice.getSummary(this.selectedPlatform, runtime, state, this.selectedMemory, this.selectedRegion, this.selectedStartDate, this.selectedEndDate)
       .subscribe((data: SummaryResponseModel) => { 
         if (data.minExecution != null) {
+          // we got valid data
           this.metricsData.push({
             runtime: this.displayRuntimeMap[runtime], 
             max: parseFloat(this.getExecutionDuration(data.maxExecution)).toFixed(2), 
@@ -127,11 +138,21 @@ export class AppComponent {
           this.dataSource = new MatTableDataSource(this.metricsData);
           this.dataSource.sort = this.spfSort;
         }
+        else {
+          // an error occurred - report error to screen
+          if (this.errorMessage == "") {
+            this.errorMessage = `Failed to retrieve data for the following runtimes (please try again later): ${this.displayRuntimeMap[runtime]}`;
+          }
+          else {
+            this.errorMessage += `, ${this.displayRuntimeMap[runtime]}`;
+          }
+        }
     });
   }  
 
   showAWSData() {
-    environment.runtimes.forEach(runtime => {
+    let runtimes = (this.selectedPlatform == 'AWS Lambda') ? environment.aws_runtimes : environment.azure_runtimes;
+    runtimes.forEach(runtime => {
       this.getSummary(runtime, this.selectedState);
     });
   }

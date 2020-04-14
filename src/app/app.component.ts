@@ -51,29 +51,27 @@ export class AppComponent {
 
   // filter selects
   availableFunctionStates = FunctionState;
+
+  // filter dates
   minDate = new Date(2020, 0, 13); // official prod records started 12th Jan 2020
   maxDate = new Date();
-  initialStartDate = new FormControl(new Date());
+  thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate()-30));
+  actualStartDate = (this.minDate > this.thirtyDaysAgo) ? this.minDate : this.thirtyDaysAgo;
+  initialStartDate = new FormControl(this.actualStartDate);
   initialEndDate = new FormControl(new Date());
+  selectedStartDate = new Date(this.actualStartDate);
+  selectedEndDate = new Date(new Date());
   coldStartIncludesInitDurationStartDate = new Date(2020, 2, 5); // started storing init-duration for cold start on 5th March 2020
 
-  
   selectedMemory = '128';
   selectedRegion = 'us-east-1';
   selectedPlatform = 'AWS Lambda';
   selectedState : FunctionState = FunctionState.warm;
-  selectedStartDate = new Date(this.minDate);
-  selectedEndDate = new Date(this.maxDate);
 
   invalidInputs = false;
   errorMessage = "";
 
-  constructor(private spfapiservice: SpfapiService) {
-    let thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate()-30));
-    let actualStartDate = (this.minDate > thirtyDaysAgo) ? this.minDate : thirtyDaysAgo;
-    this.initialStartDate = new FormControl(actualStartDate);
-    this.initialEndDate = new FormControl(new Date());
-  
+  constructor(private spfapiservice: SpfapiService) {  
     this.showAWSData()
   }
 

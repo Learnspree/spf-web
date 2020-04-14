@@ -56,11 +56,12 @@ export class AppComponent {
   minDate = new Date(2020, 0, 13); // official prod records started 12th Jan 2020
   maxDate = new Date();
   thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate()-30));
+  oneDayAgo = new Date(new Date().setDate(new Date().getDate()-1));
   actualStartDate = (this.minDate > this.thirtyDaysAgo) ? this.minDate : this.thirtyDaysAgo;
   initialStartDate = new FormControl(this.actualStartDate);
-  initialEndDate = new FormControl(new Date());
+  initialEndDate = new FormControl(this.oneDayAgo);
   selectedStartDate = new Date(this.actualStartDate);
-  selectedEndDate = new Date(new Date());
+  selectedEndDate = new Date(this.oneDayAgo);
   coldStartIncludesInitDurationStartDate = new Date(2020, 2, 5); // started storing init-duration for cold start on 5th March 2020
 
   selectedMemory = '128';
